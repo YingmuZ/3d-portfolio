@@ -1,22 +1,22 @@
-import { Suspense, useState } from 'react';
-import { Canvas } from '@react-three/fiber';
-import Loader from '../components/Loader';
-import Island from '../models/Island';
-import Sky from '../models/Sky';
-import Bird from '../models/Bird';
-import Plane from '../models/Plane'
+import { Suspense, useState } from "react";
+import { Canvas } from "@react-three/fiber";
+import Loader from "../components/Loader";
+import Island from "../models/Island";
+import Sky from "../models/Sky";
+import Bird from "../models/Bird";
+import Plane from "../models/Plane";
+import HomeInfo from "../components/HomeInfo";
 
-
-{/* <div className='absolute top-28 left-0 right-0 z-10 flex items-center justify-center'>
+{
+  /* <div className='absolute top-28 left-0 right-0 z-10 flex items-center justify-center'>
           poppop
-      </div> */}
-
+      </div> */
+}
 
 const Home = () => {
   // deal with rotation
   const [isRotating, setIsRotating] = useState(false);
   const [currentStage, setCurrentStage] = useState(1);
-
 
   const adjustIslandForScreenSize = () => {
     let screenScale = null;
@@ -48,16 +48,19 @@ const Home = () => {
     return [screenScale, screenPosition];
   };
 
-  const [islandScale, islandPosition, islandRotation] = adjustIslandForScreenSize();
+  const [islandScale, islandPosition, islandRotation] =
+    adjustIslandForScreenSize();
   const [planeScale, planePosition] = adjustPlaneForScreenSize();
 
   return (
-    <section className='w-full h-screen relative'>
-      <div className='absolute top-28 left-0 right-0 z-10 flex items-center justify-center'>
-        {currentStage}
+    <section className="w-full h-screen relative">
+      <div className="absolute top-28 left-0 right-0 z-10 flex items-center justify-center">
+        {currentStage && <HomeInfo currentStage={currentStage} />}
       </div>
-
-      <Canvas 
+      {/* <div className="absolute top-28 left-0 right-0 z-10 flex items-center justify-center">
+        poppop
+      </div> */}
+      <Canvas
         className={`w-full h-screen bg-transparent ${
           isRotating ? "cursor-grabbing" : "cursor-grab"
         }`}
@@ -74,13 +77,13 @@ const Home = () => {
             intensity={2}
           />
           <hemisphereLight
-            skyColor='#b1e1ff'
-            groundColor='#000000'
+            skyColor="#b1e1ff"
+            groundColor="#000000"
             intensity={1}
           />
 
           <Bird />
-          <Sky isRotating={isRotating}/>
+          <Sky isRotating={isRotating} />
           <Island
             isRotating={isRotating}
             setIsRotating={setIsRotating}
@@ -89,7 +92,7 @@ const Home = () => {
             rotation={islandRotation}
             scale={islandScale}
           />
-          <Plane 
+          <Plane
             planeScale={planeScale}
             planePosition={planePosition}
             isRotating={isRotating}
@@ -98,7 +101,7 @@ const Home = () => {
         </Suspense>
       </Canvas>
     </section>
-  )
-}
+  );
+};
 
-export default Home
+export default Home;
